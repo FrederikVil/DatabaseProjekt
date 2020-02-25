@@ -25,10 +25,18 @@ namespace DatabaseProjekt.Model
             cmd.Parameters.AddWithValue("@postnr", postnummer);
 
             cmd.ExecuteNonQuery();
+            myConn.Close();
+        }
 
+        public void Delete()
+        {
+            string query = "DELETE FROM Postnummer WHERE Postnummer = @postnr";
+            myConn.Open();
+            SqlCommand cmd = new SqlCommand(query, myConn);
+            cmd.Parameters.AddWithValue("@postnr", postnummer);
 
-
-
+            cmd.ExecuteNonQuery();
+            myConn.Close();
         }
 
 
