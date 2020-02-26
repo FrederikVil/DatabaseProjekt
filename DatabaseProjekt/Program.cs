@@ -67,10 +67,8 @@ namespace DatabaseProjekt
         {
             SqlConnection c = GetConnection();
             ByNavn city = new ByNavn(c);
-            Console.Write("Fjern by:");
+            Console.Write("Fjern by: ");
             city.byNavn = Convert.ToString(Console.ReadLine());
-            Console.Write("Fjern Postnummer ID:");
-            city.postnummerID = Convert.ToString(Console.ReadLine());
             city.Save();
         }
 

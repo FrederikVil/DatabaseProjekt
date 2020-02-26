@@ -8,20 +8,23 @@ namespace DatabaseProjekt.Model
 {
      class ByNavn
     {
-
+        // Mine fields.
         public int byNavnID { get; set; }
         public string byNavn { get; set; }
         public string postnummerID { get; set; }
 
+        // Databse table name.
         private string tableName = "ByNavn";
 
         private SqlConnection myConn;
 
+        // Connnection string fra program klassen.
         public ByNavn(SqlConnection c)
         {
             myConn = c;
         }
 
+        // Insert postnummer og by i databasen.
         public void Insert()
         {
             string query = "INSERT INTO ByNavn (ByNavn, PostnummerID) VALUES (@bynavn, @postnummerID)";
@@ -33,6 +36,7 @@ namespace DatabaseProjekt.Model
             myConn.Close();
         }
 
+        // Select statement der tager ID, bynavn og postnummer og inner joiner bynavn.postnummerID = postnummer.postnummerID.
         public void Select()
         {
             string query = "SELECT Bynavn.ByNavnID, ByNavn.ByNavn, Postnummer.Postnummer " +
@@ -44,37 +48,43 @@ namespace DatabaseProjekt.Model
             Console.WriteLine("\nID | Bynavn | Postnummer \n");
             while (reader.Read())
             {
+                // Første er Id så den skal reade en INT. Næste er bynavnet hvilket er en string, og det sidste er postnummeret så det er INT igen.
                 Console.WriteLine("{0}  {1}  {2}", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2));
             }
             reader.Close();
             myConn.Close();
         }
 
+        // Save metode så SQL metoderne kan genbruges i de forskellige klasser, kun med ændringer i Save metoden.
         public void Save()
         {
             ArrayList values = new ArrayList()
             {
-                byNavn,
-                postnummerID
+                byNavn
+                
             };
 
             List<string> keys = new List<string>
             {
-                "ByNavn",
-                "PostnummerID"
+                "ByNavn"
+                
             };
 
             DeleteWorksForAllClasses(tableName, values, keys);
         }
 
+        // Delete metode der virker i alle klasser.
         public void DeleteWorksForAllClasses(string tableName, ArrayList values, List<string> keys)
         {
+            // Tager de ting i listen keys og ligger dem i fieldnames or parameters, så de har de rigtige "@" og ",".
             string fieldnames = string.Join(",", keys);
             string parameters = "@" + string.Join(",@", keys);
 
+            // Min query der tager tingene oppe fra Save, og kører dem igennem.
             string query = $"DELETE FROM {tableName} WHERE {fieldnames} = {parameters}";
             SqlCommand cmd = new SqlCommand(query, myConn);
 
+            // Laver et parameter til hver value.
             for (int i = 0; i < keys.Count; i++)
             {
                 cmd.Parameters.AddWithValue("@" + keys[i], values[i]);
@@ -83,7 +93,6 @@ namespace DatabaseProjekt.Model
             cmd.ExecuteNonQuery();
             myConn.Close();
         }
-
 
     }
 }
