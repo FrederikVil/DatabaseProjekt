@@ -17,15 +17,15 @@ namespace DatabaseProjekt.Model
             myConn = c;
         }
 
-        public void Save()
+        public int Insert()
         {
-            string query = "INSERT INTO Postnummer (Postnummer) VALUES (@postnr)";
+            string query = "INSERT INTO Postnummer (Postnummer) output INSERTED.PostnummerID VALUES (@postnr)";
             myConn.Open();
             SqlCommand cmd = new SqlCommand(query, myConn);
-            cmd.Parameters.AddWithValue("@postnr", postnummer);
-
-            cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@postnr", postnummer); 
+            int i = (int)cmd.ExecuteScalar();
             myConn.Close();
+            return i;
         }
 
         public void Delete()
@@ -34,12 +34,10 @@ namespace DatabaseProjekt.Model
             myConn.Open();
             SqlCommand cmd = new SqlCommand(query, myConn);
             cmd.Parameters.AddWithValue("@postnr", postnummer);
-
+               
             cmd.ExecuteNonQuery();
             myConn.Close();
         }
-
-
 
     }
 }

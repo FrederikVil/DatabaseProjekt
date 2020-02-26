@@ -10,11 +10,13 @@ namespace DatabaseProjekt
         public static void Main()
         {
 
-            //SavePostnummer();
+            InsertPostnummerOgBy();
 
-            //SaveByNavn();
+            SelectByNavn();
 
-            DeletePostnummer();
+            //DeletePostnummer();
+
+
 
         }
         static SqlConnection GetConnection()
@@ -35,15 +37,6 @@ namespace DatabaseProjekt
             return conn;
         }
 
-        static void SavePostnummer()
-        {
-            SqlConnection c = GetConnection();
-            Postnummer zip = new Postnummer(c);
-            Console.Write("Tilføj postnummer: ");
-            zip.postnummer = Convert.ToInt32(Console.ReadLine());
-            zip.Save();
-        }
-
         static void DeletePostnummer()
         {
             SqlConnection c = GetConnection();
@@ -53,13 +46,28 @@ namespace DatabaseProjekt
             zip.Delete();
         }
 
-        static void SaveByNavn()
+        static void InsertPostnummerOgBy()
         {
             SqlConnection c = GetConnection();
+            Postnummer zip = new Postnummer(c);
+            Console.Write("Tilføj postnummer: ");
+            zip.postnummer = Convert.ToInt32(Console.ReadLine());
+            int newID = zip.Insert();
+            Console.WriteLine("Postnummerets ID er: " + newID);
+
             ByNavn city = new ByNavn(c);
             Console.Write("Tilføj by: ");
             city.byNavn = Convert.ToString(Console.ReadLine());
-            city.Save();
+            Console.Write("Tilføj byens Postnummer ID: ");
+            city.postnummerID = Convert.ToString(Console.ReadLine());
+            city.Insert();
+        }
+
+        static void SelectByNavn()
+        {
+            SqlConnection c = GetConnection();
+            ByNavn city = new ByNavn(c);
+            city.Select();
         }
 
 
