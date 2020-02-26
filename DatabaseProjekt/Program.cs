@@ -10,15 +10,21 @@ namespace DatabaseProjekt
         public static void Main()
         {
 
-            InsertPostnummerOgBy();
+            //InsertPostnummerOgBy();
 
-            SelectByNavn();
+            //SelectByNavn();
+
+            //DeletePostnummerWorksForAllClasses();
+
+            DeleteByWorksForAllClasses();
 
             //DeletePostnummer();
 
 
 
         }
+
+        // Min connection string jeg kan tage med i andre klasser
         static SqlConnection GetConnection()
         {
             
@@ -31,12 +37,11 @@ namespace DatabaseProjekt
             };
 
             SqlConnection conn = new SqlConnection(builder.ConnectionString);
-
-          //  SqlConnection conn = new SqlConnection("Server=localhost; Database=Dyr; Uid=Dyr;Pwd=admin");
-
             return conn;
         }
 
+        // Normal delete postnummmer.
+        // SQL server forbyder at man sletter et postnummer hvis det bruges som foreign key i en anden tabel.
         static void DeletePostnummer()
         {
             SqlConnection c = GetConnection();
@@ -46,6 +51,30 @@ namespace DatabaseProjekt
             zip.Delete();
         }
 
+        // Delete postnummer med metoden der kan bruges i alle klasser. 
+        // SQL server forbyder at man sletter et postnummer hvis det bruges som foreign key i en anden tabel.
+        static void DeletePostnummerWorksForAllClasses()
+        {
+            SqlConnection c = GetConnection();
+            Postnummer zip = new Postnummer(c);
+            Console.Write("Fjern postnummer: ");
+            zip.postnummer = Convert.ToInt32(Console.ReadLine());
+            zip.Save();
+        }
+
+        // Delete by, med metoden der kan bruges i alle klasser.
+        static void DeleteByWorksForAllClasses()
+        {
+            SqlConnection c = GetConnection();
+            ByNavn city = new ByNavn(c);
+            Console.Write("Fjern by:");
+            city.byNavn = Convert.ToString(Console.ReadLine());
+            Console.Write("Fjern Postnummer ID:");
+            city.postnummerID = Convert.ToString(Console.ReadLine());
+            city.Save();
+        }
+
+        // Insert Postnummer og by i databasen
         static void InsertPostnummerOgBy()
         {
             SqlConnection c = GetConnection();
@@ -63,13 +92,12 @@ namespace DatabaseProjekt
             city.Insert();
         }
 
+        // Printer bynavne og deres postnummer ud
         static void SelectByNavn()
         {
             SqlConnection c = GetConnection();
             ByNavn city = new ByNavn(c);
             city.Select();
         }
-
-
     }
 }

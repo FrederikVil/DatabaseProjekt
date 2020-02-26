@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace DatabaseProjekt.Model
 {
@@ -11,6 +12,8 @@ namespace DatabaseProjekt.Model
         public int byNavnID { get; set; }
         public string byNavn { get; set; }
         public string postnummerID { get; set; }
+
+        private string tableName = "ByNavn";
 
         private SqlConnection myConn;
 
@@ -46,6 +49,42 @@ namespace DatabaseProjekt.Model
             reader.Close();
             myConn.Close();
         }
+
+        public void Save()
+        {
+            ArrayList values = new ArrayList()
+            {
+                byNavn,
+                postnummerID
+            };
+
+            List<string> keys = new List<string>
+            {
+                "ByNavn",
+                "PostnummerID"
+            };
+
+            DeleteWorksForAllClasses(tableName, values, keys);
+        }
+
+        public void DeleteWorksForAllClasses(string tableName, ArrayList values, List<string> keys)
+        {
+            string fieldnames = string.Join(",", keys);
+            string parameters = "@" + string.Join(",@", keys);
+
+            string query = $"DELETE FROM {tableName} WHERE {fieldnames} = {parameters}";
+            SqlCommand cmd = new SqlCommand(query, myConn);
+
+            for (int i = 0; i < keys.Count; i++)
+            {
+                cmd.Parameters.AddWithValue("@" + keys[i], values[i]);
+            }
+            myConn.Open();
+            cmd.ExecuteNonQuery();
+            myConn.Close();
+        }
+
+
     }
 }
 
