@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace DatabaseProjekt.Model
 {
-     class ByNavn
+     class ByNavn : Crud
     {
         // Mine fields.
         public int byNavnID { get; set; }
@@ -16,12 +16,10 @@ namespace DatabaseProjekt.Model
         // Databse table name.
         private string tableName = "ByNavn";
 
-        private SqlConnection myConn;
 
-        // Connnection string fra program klassen.
-        public ByNavn(SqlConnection c)
+        // Henter connection string med ned i ByNavn klassen.
+        public ByNavn(SqlConnection c) : base(c)
         {
-            myConn = c;
         }
 
         // Insert postnummer og by i databasen.
@@ -71,27 +69,6 @@ namespace DatabaseProjekt.Model
             };
 
             DeleteWorksForAllClasses(tableName, values, keys);
-        }
-
-        // Delete metode der virker i alle klasser.
-        public void DeleteWorksForAllClasses(string tableName, ArrayList values, List<string> keys)
-        {
-            // Tager de ting i listen keys og ligger dem i fieldnames or parameters, så de har de rigtige "@" og ",".
-            string fieldnames = string.Join(",", keys);
-            string parameters = "@" + string.Join(",@", keys);
-
-            // Min query der tager tingene oppe fra Save, og kører dem igennem.
-            string query = $"DELETE FROM {tableName} WHERE {fieldnames} = {parameters}";
-            SqlCommand cmd = new SqlCommand(query, myConn);
-
-            // Laver et parameter til hver value.
-            for (int i = 0; i < keys.Count; i++)
-            {
-                cmd.Parameters.AddWithValue("@" + keys[i], values[i]);
-            }
-            myConn.Open();
-            cmd.ExecuteNonQuery();
-            myConn.Close();
         }
 
     }

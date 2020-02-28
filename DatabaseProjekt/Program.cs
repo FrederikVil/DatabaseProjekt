@@ -16,11 +16,7 @@ namespace DatabaseProjekt
 
             //DeletePostnummerWorksForAllClasses();
 
-            DeleteByWorksForAllClasses();
-
-            //DeletePostnummer();
-
-
+            //DeleteByWorksForAllClasses();
 
         }
 
@@ -38,17 +34,6 @@ namespace DatabaseProjekt
 
             SqlConnection conn = new SqlConnection(builder.ConnectionString);
             return conn;
-        }
-
-        // Normal delete postnummmer.
-        // SQL server forbyder at man sletter et postnummer hvis det bruges som foreign key i en anden tabel.
-        static void DeletePostnummer()
-        {
-            SqlConnection c = GetConnection();
-            Postnummer zip = new Postnummer(c);
-            Console.Write("Fjern postnummer: ");
-            zip.postnummer = Convert.ToInt32(Console.ReadLine());
-            zip.Delete();
         }
 
         // Delete postnummer med metoden der kan bruges i alle klasser. 
