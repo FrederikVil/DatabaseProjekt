@@ -57,7 +57,7 @@ namespace DatabaseProjekt
             city.Save();
         }
 
-        // Insert Postnummer og by i databasen
+        // Insert Postnummer og by i databasen.
         static void InsertPostnummerOgBy()
         {
             SqlConnection c = GetConnection();

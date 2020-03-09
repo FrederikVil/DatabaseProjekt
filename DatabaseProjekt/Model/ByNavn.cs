@@ -46,7 +46,7 @@ namespace DatabaseProjekt.Model
             Console.WriteLine("\nID | Bynavn | Postnummer \n");
             while (reader.Read())
             {
-                // Første er Id så den skal reade en INT. Næste er bynavnet hvilket er en string, og det sidste er postnummeret så det er INT igen.
+                // Første er Id så den skal reade en INT. Næste er bynavnet hvilket er en string, og det sidste er postnummeret som er INT igen.
                 Console.WriteLine("{0}  {1}  {2}", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2));
             }
             reader.Close();

@@ -10,7 +10,7 @@ namespace DatabaseProjekt.Model
     {
         protected SqlConnection myConn;
 
-        // Connnection string fra program klassen.
+        // Connnection string fra program klassen. 
         public Crud(SqlConnection c)
         {
             myConn = c;

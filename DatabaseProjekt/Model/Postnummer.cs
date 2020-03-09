@@ -15,7 +15,7 @@ namespace DatabaseProjekt.Model
         // string til table name.
         private string tableName = "Postnummer";
 
-        // Henter connection string med ned i Postnummer klassen
+        // Henter connection string med ned i Postnummer klassen.
         public Postnummer(SqlConnection c) : base(c)
         {
         }
