@@ -14,9 +14,9 @@ namespace DatabaseProjekt
 
             //SelectByNavn();
 
-            //DeletePostnummerWorksForAllClasses();
-
             //DeleteByWorksForAllClasses();
+
+            //DeletePostnummerWorksForAllClasses();
 
         }
 

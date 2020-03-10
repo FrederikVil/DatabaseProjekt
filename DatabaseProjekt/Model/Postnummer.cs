@@ -48,18 +48,5 @@ namespace DatabaseProjekt.Model
             DeleteWorksForAllClasses(tableName, values, keys);
 
         }
-
-
-        //public void Update(List<string> keys)
-        //{
-        //    ArrayList Values = new ArrayList();
-        //    foreach (string item in keys)
-        //    {
-        //        Values.Add(this.GetType().GetProperty(item).GetValue(this, null));
-        //    }
-
-        //    base.Update(tableName, Values, keys, "PostnummerID", postnummerID.ToString());
-        //}
-
     }
 }
