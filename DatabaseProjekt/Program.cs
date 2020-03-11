@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using DatabaseProjekt.Model;
 
@@ -17,6 +18,8 @@ namespace DatabaseProjekt
             //DeleteByWorksForAllClasses();
 
             //DeletePostnummerWorksForAllClasses();
+
+            UpdatePostnummer();
 
         }
 
@@ -81,6 +84,25 @@ namespace DatabaseProjekt
             SqlConnection c = GetConnection();
             ByNavn city = new ByNavn(c);
             city.Select();
+        }
+
+        // Opdaterer postnummer
+        static void UpdatePostnummer()
+        {
+            SqlConnection c = GetConnection();
+            Postnummer zip = new Postnummer(c);
+            Console.Write("Vælg et postnummmer ID der skal opdateres: ");
+            zip.postnummerID = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Skriv det nye postnummer: ");
+            zip.postnummer = Convert.ToInt32(Console.ReadLine());
+
+            // Liste med felter der skal opdateres tages med ind i Postnummer klassen.
+            List<string> propertiesToBeUpdated = new List<string>
+            {
+                "postnummer"            
+            };
+
+            zip.Update(propertiesToBeUpdated);           
         }
     }
 }

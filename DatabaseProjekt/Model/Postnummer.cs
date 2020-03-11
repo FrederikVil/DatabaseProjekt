@@ -48,5 +48,17 @@ namespace DatabaseProjekt.Model
             DeleteWorksForAllClasses(tableName, values, keys);
 
         }
+
+        public void Update(List<string> keys)
+        {
+            // For loop der tjekker alle items igennem
+            ArrayList Values = new ArrayList();
+            foreach (string item in keys)
+            {
+                Values.Add(this.GetType().GetProperty(item).GetValue(this, null));
+            }
+            // Tager alt info med ind i Crud klassen.
+            base.UpdateWorksForAllClasses(tableName, Values, keys, "PostnummerID", postnummerID.ToString());
+        }
     }
 }

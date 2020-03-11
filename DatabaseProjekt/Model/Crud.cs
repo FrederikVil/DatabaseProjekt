@@ -37,19 +37,24 @@ namespace DatabaseProjekt.Model
             myConn.Close();
         }
 
-        protected void Update(string TableName, ArrayList values, List<string> keys, string key, string value)
+        // Update metode der virker i alle klasser.
+        protected void UpdateWorksForAllClasses(string TableName, ArrayList values, List<string> keys, string key, string value)
         {
+            // Første del af SQL query.
             string query = "UPDATE " + TableName + " SET ";
             int l = values.Count;
 
+            // For loop der tilføjer keys fra listen til query.
             for (int i = 0; i < l; i++)
             {
                 query += keys[i] + " = @" + keys[i] + ",";
             }
+            // Fjerne det sidste , i query.
             char[] charToBeRemoved = { ',' };
             query = query.TrimEnd(charToBeRemoved);
             query += " WHERE " + key + "=" + value;
 
+            // Tilføjer SQL parameters.
             SqlCommand cmd = new SqlCommand(query, myConn);
             for (int i = 0; i < l; i++)
             {
@@ -58,7 +63,7 @@ namespace DatabaseProjekt.Model
             myConn.Open();
 
             int rowsAffected = cmd.ExecuteNonQuery();
-            Console.WriteLine(rowsAffected);
+            Console.WriteLine($"{rowsAffected} row(s) was affected");
             myConn.Close();
 
         }

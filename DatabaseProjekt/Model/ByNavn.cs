@@ -70,7 +70,6 @@ namespace DatabaseProjekt.Model
 
             DeleteWorksForAllClasses(tableName, values, keys);
         }
-
     }
 }
 
