@@ -53,7 +53,7 @@ namespace DatabaseProjekt.Model
             myConn.Close();
         }
 
-        // Save metode så SQL metoderne kan genbruges i de forskellige klasser, kun med ændringer i Save metoden.
+        // Save metode så SQL metoderne kan genbruges i de forskellige klasser, og kun med ændringer i Save metoden.
         public void Save()
         {
             ArrayList values = new ArrayList()
